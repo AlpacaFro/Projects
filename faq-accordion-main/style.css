@@ -1,0 +1,76 @@
+/* - White: hsl(0, 0%, 100%)
+- Light pink: hsl(275, 100%, 97%)
+- Grayish purple: hsl(292, 16%, 49%)
+- Dark purple: hsl(292, 42%, 14%) */
+
+*{
+    padding: 0;
+    margin: 0;
+    font-family: 'WorkSans';
+    color: hsl(292, 42%, 14%);
+}
+
+@font-face {
+    font-family: 'WorkSans';
+    src: url('./assets/fonts/WorkSans-VariableFont_wght.ttf'),
+         url('./assets/fonts/WorkSans-Italic-VariableFont_wght.ttf');
+}
+
+body {
+    background-color: hsl(275, 100%, 97%); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    
+    
+}
+
+.card{
+    position:absolute;
+    width: 80%;
+    background-color: white;
+    margin: auto;
+    border-radius: 10px;
+    padding: 20px;  
+}
+
+.bg-img{
+  position: absolute;
+  top: 0;
+}
+
+header{
+    display: flex;
+    margin-bottom: 20px;
+}
+
+header img{
+    width: 2.1rem;
+    margin-right: 15px;
+}
+
+.question-wrapper{
+    display: flex;
+    justify-content: space-between;
+    text-align: start;
+    margin-top: 40px ;
+    margin-bottom: 40px ;
+}
+
+button{
+    width: 80%;
+    border: none;
+    text-align: start;
+    letter-spacing: 1px;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+
+.answer{
+    display: none;
+    color:  hsl(292, 16%, 49%);
+    font-size: 14px;
+    line-height: 20px;
+}

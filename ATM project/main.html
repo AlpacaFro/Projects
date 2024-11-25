@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bank</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>🍆Hoister-Bank🍆</h1>
+    <form class="mainCard">
+      <p style="color: aliceblue">Please insert PIN</p>
+      <input type="text" id="pinInput" maxlength="4" max="9999" />
+      <button>Log In</button>
+      <p style="color: aliceblue">Hint: check localstorage</p>
+    </form>
+    <p id="validation"></p>
+    <div id="buttonsDiv" class="hidden">
+      <button id="depositBtn" class="funcButtons">Deposit</button>
+      <button id="whithdrawBtn" class="funcButtons">Withdraw</button>
+      <button id="balanceBtn" class="funcButtons">Balance</button>
+      <button id="lastTransactionsBtn" class="funcButtons">
+        Last Transactions
+      </button>
+    </div>
+    <div id="categoriesCards">
+      <div id="depositCard" class="hidden">
+        <h1>Depo-Eggplants🍆</h1>
+        <input
+          type="text"
+          placeholder="depo those sweet eggies"
+          id="depositInput"
+        />
+        <button id="depotInputBtn">send</button>
+      </div>
+      <div id="withdrawCard" class="hidden">
+        <h1>🍆💸Withdraw eggPlants💸🍆</h1>
+        <input
+          type="text"
+          placeholder="here you can draw your 🍆"
+          id="withdrawInput"
+        />
+        <button id="withdrawInputBtn">Take</button>
+      </div>
+      <div id="balanceCard" class="hidden"></div>
+      <div id="lastTransactionCard" class="hidden"></div>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

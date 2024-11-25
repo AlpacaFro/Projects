@@ -1,0 +1,133 @@
+.overpass-face {
+    font-family: "Overpass", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400,700;
+    font-style: normal;
+  }
+
+  body{
+    padding: 0;
+    margin: 0;
+    font-family: "OverPass";
+    background-color: hsl(216, 12%, 8%);
+    color: white;
+  }
+
+  /*  Orange: hsl(25, 97%, 53%)
+  
+- White: hsl(0, 0%, 100%)
+- Light Grey: hsl(217, 12%, 63%)
+- Dark Blue: hsl(213, 19%, 18%)
+- Very Dark Blue: hsl(216, 12%, 8%)
+ */
+
+.card{
+    
+    width: 75%;
+    margin-top: 45%;
+    display: flex;
+    flex-direction: column;
+    text-align: flex start;
+    margin-left: 8.5%;
+    background-color: hsl(213, 19%, 18%);
+    border-radius: 20px;
+    padding: 15px;
+    padding-left: 5%;
+    padding-bottom:  8%;
+    
+}
+
+
+@media screen and (min-width: 380px){
+    .card{
+        margin-top: 10%;
+        margin-left: 35%;
+        max-width: 400px ;
+        padding-left: 15px ;
+        padding-bottom: 15px ;
+    }
+}
+    
+
+.star-img{
+    width: 20px;
+    height: 20px;
+    padding: 15px;
+    margin-top: 5% ;
+    background-color:hsl(220, 8%, 22%) ;
+    border-radius: 30px;
+}
+
+h1{
+    font-size: 30px;    
+    margin: 0;
+    margin-bottom: 5px;
+    margin-top: 25px;
+}
+
+p{
+    color: hsl(217, 12%, 63%);
+    letter-spacing: 1px;
+    
+}
+
+.spans{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+span{
+   
+   
+    width: 20px;
+    height: 20px;
+    background-color: hsl(220, 8%, 22%) ;
+    border-radius: 30px;
+    text-align: center;
+    padding: 10px;
+}
+
+span:hover{
+    background-color: hsl(25, 97%, 53%) ;
+}
+
+button{
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    height: 50px;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    background-color:hsl(25, 97%, 53%) ;
+}
+
+#thanksCard{
+    align-items: center;
+}
+.mobilePhone {
+    padding:20px
+}
+
+.results{
+    flex-direction: row;
+    margin-top: 15px;
+    color:hsl(25, 97%, 53%);
+    letter-spacing: 2px;
+}
+
+.thanks{
+    padding:10px;
+    font-size: 25px;
+}
+
+.contact{
+    text-align: center;
+}
+
+.on{
+    background-color: white;
+    color: black;
+}
