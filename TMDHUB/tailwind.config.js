@@ -9,7 +9,12 @@ export default {
       colors:{
         background:'#111111',
         dimGray:'#707078',
-
+        crime:	'#b6c6f7',
+        drama:	'#dd9b55',
+        comedy:	'#E8CFDF',
+        family:	'#00FF00',
+        fantasy:	'#BD90D7',
+        romance:	'#FFC9FF',
       }
     },
   

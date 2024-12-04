@@ -1,109 +1,80 @@
-import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-const imgUrl = 'https://image.tmdb.org/t/p/w200'; // Setting default img URL base
+const TMDB_KEY = import.meta.env.VITE_TMDB_TOKEN;
 
-// Tailwind constants
-const imgStyle = 'rounded-t-lg';
-const hover = 'hover:transition-all';
 
 const Movies = () => {
-  const [trendingMovies, setTrendingMovies] = useState([]);
-  const [movieId , setMovieId] = useState(null)//being forwarded to Movie.jsx
-  const carouselRef = useRef(null);
-
+  const [nowPlaying, setNowPlaying] = useState([]);
+  const [pageNum, setPageNum] = useState(1);
+  const topMovies = `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${pageNum}`;
+  const imgUrl = 'https://image.tmdb.org/t/p/w200'; // Setting default img URL base
+  
+  
+  
   
   useEffect(() => {
-    const TMDB_URL = 'https://api.themoviedb.org/3/trending/all/day';
-    const TMDB_KEY = import.meta.env.VITE_TMDB_TOKEN; // Importing the key from .env with Vite syntax
-    
-    const fetchTrending = async () => { //fetching data from api 
+    const fetchMovies = async () => {
       try {
-        const response = await axios.get(TMDB_URL, {
+        const response = await axios.get(topMovies, {
           headers: {
-            Authorization: `Bearer ${TMDB_KEY}`, // Setting the Key
+            Authorization: `Bearer ${TMDB_KEY}`,
           },
         });
-        setTrendingMovies(response.data.results); 
+        const moviesData = response.data;
+        setNowPlaying(moviesData.results); // Set movies to the current page results
+        console.log(moviesData);
       } catch (error) {
-        console.error(error.message);
+        console.error("Error fetching movie details:", error.message);
       }
     };
-    
-    fetchTrending();
-  }, []); // calls the fetchTrending only one time 
-  
-  const scrollNext = () => {
-    if (carouselRef.current) {
-      carouselRef.current.scrollLeft += 800; 
+    fetchMovies();
+  }, [pageNum]); // Fetch new movies when page number changes
+
+
+
+  const handlePreviousPage = () => {
+    if (pageNum > 1) {
+      setPageNum((prevPageNum) => prevPageNum - 1); 
     }
+  };
+  const handleNextPage = () => {
+    setPageNum((prevPageNum) => prevPageNum + 1); 
   };
 
-  const scrollPrev = () => {
-    if (carouselRef.current) {
-      carouselRef.current.scrollLeft -= 800; 
-    }
-  };
-  
+
+
   return (
-    <>
-      <div className="w-screen  p-5">
-        <div className="relative">
-          <button
-            className=" hidden md:block absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-900 text-white rounded-full p-2 z-10"
-            onClick={scrollPrev}
-          >
-            &#8592;
-          </button>
-
-          <h1 className="text-white text-xl font-bold text-center mb-5">Trending</h1>
-
-          <div
-            ref={carouselRef}
-            className="flex items-center space-x-5 overflow-x-scroll scrollbar-hide px-5 snap-x snap-mandatory w-full"
-            style={{ scrollBehavior: 'smooth' }} >
-            {trendingMovies.length > 0 ? ( //if there's movies then..
-              trendingMovies.map((movie) => (
-               <Link to={`/movie/${movie.id}`} state={{movie}}> {/* linking to movieID*/ }
-                <div 
-                key={movie.id} 
-                className={`w-52 m-5 ${hover} hover:-translate-y-4`}
-                onClick={()=>{setMovieId(movie.id)}}
-              >
-                  <img
-                    srcSet={imgUrl + movie.poster_path}
-                    alt={movie.title || movie.name}
-                    className={`${imgStyle} w-52`}
-                  />
-                  <div
-                    className={`relative bg-gray-900 rounded-b-lg w-52 p-3 drop-shadow-2xl text-white`}
-                  >
-                    <h3 className="text-start text-sm">{movie.title || movie.name}</h3>
-                    <p className="absolute right-2 top-0 text-sm">{movie.media_type}</p>
-                    <p className="absolute right-2 top-6 text-sm">{movie.vote_average}</p>
-                  </div>
-                </div>
-                </Link>
-              ))
-            ) : ( //else Put loading 
-              <div className="animate-pulse flex justify-center items-center mx-auto bg-gray-700 rounded-xl h-40 w-full">
-                <h1>
-                  <span className="text-yellow-600">L</span>oading
-                </h1>
-              </div>
-            )}
-          </div>
-
-          <button
-            className="hidden md:block absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-900 text-white rounded-full p-2 z-10"
-            onClick={scrollNext}
-          >
-            &#8594;
-          </button>
-        </div>
+    <div className="w-screen h-screen mt-10 relative">
+      <button onClick={handlePreviousPage} className="absolute left-5 top-10 transform p-2 bg-black text-white rounded">
+        &larr;
+      </button>
+      <h2 className="text-white text-xl font-bold text-center mb-5">Top Movies</h2>
+      <button onClick={handleNextPage} className="absolute right-5 top-10 transform p-2 bg-black text-white rounded">
+        &rarr;
+      </button>
+      <div className="grid grid-cols-4 m-auto w-full gap-4 p-10">
+        {nowPlaying.map((movie) => (
+          <Link to={`/movie/${movie.id}`} key={movie.id}>
+            <div
+              className={`bg-gray-700 p-2 rounded-lg shadow-md text-white cursor-pointer hover:col-span-3 hover:row-span-3 hover:p-4 flex items-end justify-center`}
+              style={{
+                backgroundImage: movie.backdrop_path
+                  ? `url(${imgUrl}${movie.poster_path})`
+                  : "#fafafa",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                opacity: 0.7,
+              }}
+            >
+              <h3 className="text-center p-0 bg-black ">{movie.title}</h3>
+            </div>
+          </Link>
+        ))}
       </div>
-    </>
+    </div>
   );
 };
 

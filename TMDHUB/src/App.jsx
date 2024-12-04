@@ -1,13 +1,12 @@
 import React,{useState,useEffect} from 'react'
 import './App.css'
 import Header from './components/Header'
-import Movies from './components/Movies'
+import Trending from './components/Trending'
 import { BrowserRouter,Route, Routes,} from 'react-router-dom'
 import Favorites from './components/Favorites'
 import About from './components/About'
-import Movie
- from './components/Movie'
-
+import Movies from './components/Movies'
+import Movie from './components/Movie'
 
 function App() {
  
@@ -21,7 +20,12 @@ function App() {
     <BrowserRouter >
     <Header /> {/* Keeping Header on all of the sites */}
     <Routes>
-      <Route path='/' element={<Movies />} /> {/*Home*/}
+      <Route path='/' element={
+        <div>
+        <Trending />
+        <Movies />
+        </div>
+        } /> {/*Home*/}
       <Route path='/favorites' element={<Favorites />} /> {/*Favorites*/}
       <Route path='/about' element={<About />} /> {/*About*/}
       <Route path='/movie/:id' element={<Movie />}></Route>
