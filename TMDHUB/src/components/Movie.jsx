@@ -1,3 +1,5 @@
+
+// Updated Movie Component with Favorite Button
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -5,13 +7,15 @@ import axios from "axios";
 const Movie = () => {
   const { id } = useParams(); // Extract the movie ID from the URL
   const [movie, setMovie] = useState(null); // State to store movie details
+  const [genres,setGenres] = useState([]);
+  const [prodCompanies,setProdCompanies] = useState([]);
+
+  
   const imgUrl = "https://image.tmdb.org/t/p/w200";
   const TMDB_URL = `https://api.themoviedb.org/3/movie/${id}`;
   const TMDB_KEY = import.meta.env.VITE_TMDB_TOKEN; // Importing the key from .env with Vite syntax
-  const detailTitle = "text-yellow-400 text-2xl underline "
+  const detailTitle = "text-yellow-400 text-2xl underline ";
 
-  const [genres,setGenres] = useState([])
-  const [prodCompanies,setProdCompanies] = useState([])
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
@@ -21,21 +25,28 @@ const Movie = () => {
             Authorization: `Bearer ${TMDB_KEY}`, // Setting the Key
           },
         });
-        const data = response.data
+        const data = response.data;
         setMovie(data);
-        console.log(data);
         setGenres(data.genres);
-        setProdCompanies(data.production_companies)
-        console.log(prodCompanies);
-        
-        // Store the movie data
+        setProdCompanies(data.production_companies);
       } catch (error) {
         console.error("Error fetching movie details:", error.message);
       }
     };
 
     fetchMovieDetails();
-  }, []); 
+  }, [id]); 
+
+  const handleFavoriteClick = () => {
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    if (!favorites.includes(id)) {
+      favorites.push(id);
+      localStorage.setItem('favorites', JSON.stringify(favorites));
+      alert('Movie added to favorites!');
+    } else {
+      alert('Movie is already in favorites!');
+    }
+  };
 
   if (!movie) {
     return <div>Loading...</div>; // Show a loading message until data is fetched
@@ -76,6 +87,7 @@ const Movie = () => {
             <h2 className={detailTitle}>Description </h2>
             <p className="text-gray-300">{movie.overview}</p>
             <h2 className={`${detailTitle} mt-5`}>Genres</h2>
+
             <div className="flex flex-row">
             {genres.map((genre)=>(
               <p key={genre.id}
@@ -94,8 +106,31 @@ const Movie = () => {
               >
                 {genre.name}
               </p>
-            ))} 
+            ))}
             </div>
+
+            <div className="pt-5">
+            <h2 className={`${detailTitle}`} >Additional info</h2> 
+            <p>{movie.status}.</p>
+            
+            <p
+            className={`
+              ${movie.vote_average >= 1 && movie.vote_average < 4 ? "text-red-600":""}
+              ${movie.vote_average >= 3 && movie.vote_average < 6 ? "text-orange-600":""}
+              ${movie.vote_average >= 5 && movie.vote_average < 8 ? "text-rateFive":""}
+              ${movie.vote_average >= 7 && movie.vote_average < 9 ? "text-green-600":""}
+              ${movie.vote_average >= 9 ? "text-green-300":""}
+              `}
+            >Rated {movie.vote_average}/10(Total of  {movie.vote_count} votes)</p>
+            </div>
+
+            <button
+              onClick={handleFavoriteClick}
+              className="mt-5 text-white bg-red-600 hover:bg-red-700 font-bold py-2 px-4 my-2 rounded-full"
+            >
+              ❤️ Add to Favorites
+            </button>
+
             <div className="flex  items-end justify-end absolute right-2 bottom-2 ">
             {prodCompanies.map((company)=>(
              <div className="text-center text-[10px] "  >
@@ -104,6 +139,7 @@ const Movie = () => {
              </div>
             ))}
             </div>
+
           </div>
           
         </div>

@@ -47,6 +47,8 @@ const Movies = () => {
 
   return (
     <div className="w-screen h-screen mt-10 relative">
+    {nowPlaying.length > 0 ? (
+      <>
       <button onClick={handlePreviousPage} className="absolute left-5 top-10 transform p-2 bg-black text-white rounded">
         &larr;
       </button>
@@ -69,11 +71,19 @@ const Movies = () => {
                 opacity: 0.7,
               }}
             >
-              <h3 className="text-center p-0 bg-black ">{movie.title}</h3>
+              <h3 className="text-center bg-black rounded-lg p-2 ">{movie.title}</h3>
             </div>
           </Link>
         ))}
       </div>
+      </>
+):(
+  <div className="animate-pulse flex justify-center items-center mx-auto bg-gray-700 rounded-xl h-40 w-full">
+  <h1>
+    <span className="text-yellow-600">L</span>oading
+  </h1>
+</div>
+)}
     </div>
   );
 };
